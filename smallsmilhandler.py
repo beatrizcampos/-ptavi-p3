@@ -12,7 +12,7 @@ class SmallSMILHandler(ContentHandler):
         """
         self.width = ""
         self.height = ""
-        #self.background-color = ""
+        self.background-color = ""
         self.id = ""
         self.top = ""
         self.bottom = ""
@@ -32,7 +32,7 @@ class SmallSMILHandler(ContentHandler):
             # De esta manera tomamos los valores de los atributos
             self.width = attrs.get('width',"")
             self.height = attrs.get('heigth',"")
-            #self.background-color = attrs.get('background-color',"")
+            self.background-color = attrs.get('background-color',"")
             self.list.append([name, attrs])
 
         elif name == 'region':
