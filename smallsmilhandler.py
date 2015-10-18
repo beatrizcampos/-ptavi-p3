@@ -12,7 +12,7 @@ class SmallSMILHandler(ContentHandler):
         """
         self.width = ""
         self.height = ""
-        self.background-color = ""
+        #self.background-color = ""
         self.id = ""
         self.top = ""
         self.bottom = ""
@@ -21,7 +21,8 @@ class SmallSMILHandler(ContentHandler):
         self.src = ""
         self.region = ""  
         self.begin = ""
-        self.dur = ""  
+        self.dur = "" 
+        self.list = [] 
 
     def startElement(self, name, attrs):
         """
@@ -31,15 +32,41 @@ class SmallSMILHandler(ContentHandler):
             # De esta manera tomamos los valores de los atributos
             self.width = attrs.get('width',"")
             self.height = attrs.get('heigth',"")
-            self.background-color = attrs.get('background-color',"")
+            #self.background-color = attrs.get('background-color',"")
+            self.list.append([name, attrs])
+
+        elif name == 'region':
+            self.id = attrs.get('width',"")
+            self.top = attrs.get('heigth',"")
+            self.bottom = attrs.get('background-color',"")
+            self.left = attrs.get('left',"")
+            self.right = attrs.get('rigth',"")
+            self.list.append([name, attrs])
+
+        if name == 'img':
+            self.src = attrs.get('src',"")
+            self.region = attrs.get('region',"")
+            self.begin = attrs.get('begin',"")
+            self.dur = attrs.get('dur',"")
+            self.list.append([name, attrs])
+
+        if name == 'audio':
+            self.src = attrs.get('src',"")
+            self.begin = attrs.get('begin',"")
+            self.dur = attrs.get('dur',"")
+            self.list.append([name, attrs])
+
+        if name == 'textstream':
+            self.src = attrs.get('src',"")
+            self.region = attrs.get('region',"")
+            self.list.append([name, attrs])
 
     def get_tags(self):
         """
         Metodo llamado get_tags que devolvera una lista con las etiquetas encontradas, 
         sus atributos y el contenido de los atributos. 
         """
-        # self.tags = 
-        return self.tags
+        return self.list
 
 
 if __name__ == "__main__":
@@ -47,8 +74,8 @@ if __name__ == "__main__":
     Programa principal
     """
     parser = make_parser()
-    cHandler = ChistesHandler()
+    cHandler = SmallSMILHandler()
     parser.setContentHandler(cHandler)
     parser.parse(open('karaoke.smil'))
-    My_List = get_tags(cHandler)
-    print(cHandler)
+    My_List = cHandler.get_tags()
+    print(My_List)
