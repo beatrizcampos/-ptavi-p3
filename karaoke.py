@@ -16,7 +16,7 @@ def listado(lista):
         for clave in atributos:
             if atributos[clave]:
                 resultado = resultado + (str(clave + '="' + atributos[clave] + '"' + '\t'))
-        print(resultado)    
+        print(json.dump(resultado))    
 
 if __name__ == "__main__":
     try:
