@@ -6,6 +6,7 @@ from xml.sax.handler import ContentHandler
 import smallsmilhandler
 import sys
 import json
+import urllib
 
 
 def listado(lista):
@@ -19,6 +20,15 @@ def listado(lista):
                 resultado = resultado + (str(clave + '="'
                                          + atributos[clave] + '"' + '\t'))
         print(resultado)
+
+
+def do_local(lista):
+    for sublista in lista:
+        atributos = sublista[1]
+        for clave in atributos:
+            if atributos[clave].startswith('http://'):
+                urllib.request.urlretrieve(atributos[clave],
+                                           atributos[clave].split('/')[-1])
 
 
 def to_json(My_List, fich_name=""):
@@ -45,3 +55,4 @@ if __name__ == "__main__":
     My_List = cHandler.get_tags()
     List = listado(My_List)
     to_json(My_List, fich.name)
+    do_local(My_List)
